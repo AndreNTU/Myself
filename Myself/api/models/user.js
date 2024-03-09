@@ -1,6 +1,5 @@
 const mongoose = require ('mongoose')
 
-
 const userSchema = new mongoose.Schema ({
     name: {
         type: String, 
@@ -18,6 +17,6 @@ const userSchema = new mongoose.Schema ({
     verificationToken: {type: String}
 })
 
-const User = mongoose.models ("User",userSchema)
+const User = mongoose.model ("User",userSchema)
 
 module.exports = User

@@ -1,15 +1,53 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
+import React, {useEffect} from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LogInScreen = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigation = useNavigation()
+
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const token = await AsyncStorage.getItem("authToken")
+    
+                if (token) {
+                    setTimeout(() => {
+                        navigation.replace("Main")
+                    }, 400)
+                }
+            } catch (error) {
+                console.log("error", error)
+            }
+        }
+    
+        checkLoginStatus ()
+    }, [])
+    
+
+    const handleLogin = () => {
+        const user = {
+            email: email,
+            password: password
+        }
+
+        axios.post("http://192.168.0.14:8000/login", user).then((response) => {
+            console.log(response)
+            const token = response.data.token
+            AsyncStorage.setItem("authToken", token)
+            navigation.navigate("Home")
+        }).catch((error) => {
+            Alert.alert("Login error")
+            console.log("error", error)
+        })
+    }
+
     return (
         <SafeAreaView style={styles.container} >
             <View style={styles.container2}>
@@ -57,7 +95,9 @@ const LogInScreen = () => {
 
                 <View style={{ marginTop: 45 }} />
 
-                <Pressable style={{ width: 200, backgroundColor: 'black', padding: 15, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', borderRadius: 6 }}>
+                <Pressable
+                    onPress={handleLogin}
+                    style={{ width: 200, backgroundColor: 'black', padding: 15, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', borderRadius: 6 }}>
                     <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, color: 'white' }} >Login</Text>
                 </Pressable>
 

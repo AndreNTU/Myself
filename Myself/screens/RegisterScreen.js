@@ -1,16 +1,45 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios'
+
 
 const RegisterScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState ("")
     const navigation = useNavigation()
+    const handleRegister = () => {
+        const user = {
+            name: name,
+            email: email,
+            password: password
+        }
+
+        axios
+      .post("http://192.168.0.14:8000/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registration successful",
+          "you have been registered successfully"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registration failed",
+          "An error occurred during registration"
+        );
+        console.log("error", error);
+      });
+  };
     return (
         <SafeAreaView style={styles.container} >
             <View style={styles.container2}>
@@ -33,8 +62,8 @@ const RegisterScreen = () => {
                     <Ionicons style={{ marginLeft: 8, color: 'gray' }} name="person" size={24} color="black" />
 
                     <TextInput
-                        value={email}
-                        onChangeText={(name) => setName(text)}
+                        value={name}
+                        onChangeText={(text) => setName(text)}
                         placeholderTextColor={'gray'} style={{ color: 'gray', marginVertical: 10, width: 300, fontSize: name ? 16 : 16 }} placeholder="enter your Name" />
                 </View>
 
@@ -62,7 +91,9 @@ const RegisterScreen = () => {
 
                 <View style={{ marginTop: 45 }} />
 
-                <Pressable style={{ width: 200, backgroundColor: 'black', padding: 15, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', borderRadius: 6 }}>
+                <Pressable 
+                onPress = {handleRegister}
+                style={{ width: 200, backgroundColor: 'black', padding: 15, marginTop: 40, marginLeft: 'auto', marginRight: 'auto', borderRadius: 6 }}>
                     <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, color: 'white' }} >Register</Text>
                 </Pressable>
 
