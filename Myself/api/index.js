@@ -1,28 +1,28 @@
-const express = require ('express')
-const bodyParser = require ('body-parser')
-const mongoose = require ('mongoose')
-const crypto = require ('crypto')
-const nodemailer = require ('nodemailer')
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const crypto = require('crypto')
+const nodemailer = require('nodemailer')
 
-const app = express ()
+const app = express()
 const port = 8000
-const cors = require ('cors')
-app.use (cors())
+const cors = require('cors')
+app.use(cors())
 
-app.use(bodyParser.urlencoded ({extended:false}))
-app.use(bodyParser.json ())
-const jwt = require ("jsonwebtoken")
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+const jwt = require("jsonwebtoken")
 
-mongoose.connect ("mongodb+srv://traderdre:andre@cluster0.xakisip.mongodb.net/", {
+mongoose.connect("mongodb+srv://traderdre:andre@cluster0.xakisip.mongodb.net/", {
 
-}).then (() => {
-    console.log ("Connected to MongoDB")
-}).catch ((err) => {
-    console.log ("Error Connecting to MongoDB")
+}).then(() => {
+  console.log("Connected to MongoDB")
+}).catch((err) => {
+  console.log("Error Connecting to MongoDB")
 })
 
-app.listen(port, "192.168.0.14",() => {
-    console.log ("server is running on http://192.168.0.14")
+app.listen(port, "192.168.0.14", () => {
+  console.log("server is running on http://192.168.0.14")
 })
 
 const User = require("./models/user");
@@ -63,8 +63,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "thirdeyesniperz@gmail.com",
-        pass: "ryvp stlb iioy unvw",
+      user: "thirdeyesniperz@gmail.com",
+      pass: "ryvp stlb iioy unvw",
     }
 
   });
@@ -131,3 +131,58 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Login failed" });
   }
 });
+
+
+// endpoint to access all the users except the logged in user
+app.get("/user/:userId", (req, res) => {
+  try {
+    const loggedInUserId = req.params.userId;
+
+    User.find({ _id: { $ne: loggedInUserId } })
+      .then((users) => {
+        res.status(200).json(users);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+        res.status(500).json("error");
+      });
+  } catch (error) {
+    res.status(500).json({ message: "error getting the users" });
+  }
+})
+
+// endpoint to create a new post in the backend
+app.post("/create-post", async (req, res) => {
+  try {
+    const { content, userId } = req.body;
+
+    const newPostData = {
+      user: userId,
+    };
+
+    if (content) {
+      newPostData.content = content;
+    }
+
+    const newPost = new Post(newPostData);
+
+    await newPost.save();
+
+    res.status(200).json({ message: "Post saved successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "post creation failed" });
+  }
+})
+
+// endpoint to get all the posts
+
+app.get('/get-posts', async (req, res) => {
+  try {
+    const posts = await Post.find().populate('user', 'name').sort({ created_at: -1 })
+
+
+    res.status(200).json(posts)
+  } catch (error) {
+    res.status(500).json({ message: ' An error occured while getting the posts' })
+  }
+})
