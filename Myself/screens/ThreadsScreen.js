@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, Button } from 'react-native'
-import { React, useState, useEffect, useContext } from 'react'
+import { React, useState, useContext } from 'react'
 import axios from 'axios'
 
 import { UserType } from '../userContext'

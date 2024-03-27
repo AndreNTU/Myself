@@ -10,7 +10,6 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import ThreadsScreen from './screens/ThreadsScreen'
 import { Ionicons } from '@expo/vector-icons';
-import ActivityScreen from './screens/ActivityScreen'
 import ProfileScreen from './screens/ProfileScreen'
 
 const Stack = createStackNavigator()
@@ -46,21 +45,6 @@ function BottomTabs() {
               <Ionicons name="create" size={24} color="black" />
             ) : (
               <Ionicons name="create-outline" size={24} color="black" />
-            )
-        }} />
-        <Tab.Screen
-        name="Activity"
-        component={ActivityScreen}
-        options=
-        {{
-          tabBarLabel: "Activity",
-          tabBarLabelStyle: { color: 'black' },
-          headerShown: false,
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <AntDesign name="heart" size={24} color="black" />
-            ) : (
-              <AntDesign name="hearto" size={24} color="black" />
             )
         }} />
          <Tab.Screen

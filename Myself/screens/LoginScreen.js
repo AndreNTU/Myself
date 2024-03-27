@@ -37,7 +37,7 @@ const LogInScreen = () => {
             password: password
         }
 
-        axios.post("http://192.168.0.14:8000/login", user)
+        axios.post(`http://192.168.0.14:8000/login`, user)
         .then((response) => {
             console.log(response)
             const token = response.data.token
@@ -51,14 +51,10 @@ const LogInScreen = () => {
 
     return (
         <SafeAreaView style={styles.container} >
-            <View style={styles.container2}>
-                <Image
-                    style={{ width: 150, height: 100, resizeMode: "contain" }}
-                    source={{
-                        uri: "https://freelogopng.com/images/all_img/1688663386threads-logo-transparent.png",
-                    }}
-                />
-            </View>
+        <View style = {{marginTop:75}}>
+
+        </View>
+            
             <KeyboardAvoidingView>
                 <View style={styles.logincontainer}>
                     <Text style={styles.login}>Login to your Account</Text>
@@ -90,7 +86,7 @@ const LogInScreen = () => {
                 <View>
                     <View style={styles.bottomtext}>
                         <Text>Keep me logged in</Text>
-                        <Text style={{ fontWeight: '500', color: '#007FFF' }}>Forgot Password</Text>
+                        <Text>Forgot Password</Text>
                     </View>
                 </View>
 
@@ -103,7 +99,7 @@ const LogInScreen = () => {
                 </Pressable>
 
                 <Pressable onPress={() => navigation.navigate('Register')} style={{ marginTop: 10 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16 }} >Don't have an account? Sign up</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 16 }} >Don't have an account? <Text style={{ fontWeight: '500', color: '#007FFF' }}>Sign Up</Text></Text>
                 </Pressable>
 
             </KeyboardAvoidingView>

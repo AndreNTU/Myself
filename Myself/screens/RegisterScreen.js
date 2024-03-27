@@ -42,13 +42,8 @@ const RegisterScreen = () => {
   };
     return (
         <SafeAreaView style={styles.container} >
-            <View style={styles.container2}>
-                <Image
-                    style={{ width: 150, height: 100, resizeMode: "contain" }}
-                    source={{
-                        uri: "https://freelogopng.com/images/all_img/1688663386threads-logo-transparent.png",
-                    }}
-                />
+            <View style = {{marginTop:75}}>
+                
             </View>
             <KeyboardAvoidingView>
                 <View style={styles.logincontainer}>
@@ -98,7 +93,7 @@ const RegisterScreen = () => {
                 </Pressable>
 
                 <Pressable onPress={() => navigation.goBack()} style={{ marginTop: 10 }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16 }} >Already have an account? Sign in</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 16 }} >Already have an account? <Text style={{ fontWeight: '500', color: '#007FFF' }}>Sign In</Text></Text>
                 </Pressable>
 
             </KeyboardAvoidingView>
