@@ -1,4 +1,4 @@
-import {Text, View, ScrollView, Image } from 'react-native'
+import {Text, View, ScrollView, Image} from 'react-native'
 import { React, useEffect, useContext, useState,useCallback } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -11,7 +11,7 @@ import { useFocusEffect } from "@react-navigation/native"
 global.atob = decode
 
 import { UserType } from '../userContext'
-
+ 
 const HomeScreen = () => {
     const { userId, setUserId } = useContext(UserType)
     const [posts, setPosts] = useState([])
@@ -36,7 +36,7 @@ const HomeScreen = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get("http://192.168.0.14:8000/get-posts")
+            const response = await axios.get("http://192.168.0.6:8000/get-posts")
             setPosts(response.data)
 
         } catch (error) {
@@ -44,6 +44,7 @@ const HomeScreen = () => {
 
         }
     }
+
     console.log('posts', posts)
     return (
         <ScrollView style={{ marginTop: 50, flex: 1, backgroundColor: 'white' }}>
@@ -52,7 +53,7 @@ const HomeScreen = () => {
             </View>
 
             <View style={{ marginTop: 20, marginLeft: 10 }}>
-                {posts.map((post) =>
+                {posts.map((post, uid) =>
                     <View style = {{padding: 15, borderColor:'#D0D0D0', borderTopWidth: 1, flexDirection: 'row', gap: 10, marginVertical: 10 }}>
                         <View>
                         <Image

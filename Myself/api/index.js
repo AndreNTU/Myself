@@ -21,8 +21,8 @@ mongoose.connect("mongodb+srv://traderdre:andre@cluster0.xakisip.mongodb.net/", 
   console.log("Error Connecting to MongoDB")
 })
 
-app.listen(port, "192.168.0.14", () => {
-  console.log("server is running on http://192.168.0.14")
+app.listen(port, "192.168.0.6", () => {
+  console.log("server is running on http://192.168.0.6")
 })
 
 const User = require("./models/user");

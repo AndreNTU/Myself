@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
@@ -14,14 +13,18 @@ import ProfileScreen from './screens/ProfileScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
+
+
 function BottomTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
+
         options=
         {{
+          gestureEnabled: false,
           tabBarLabel: "Home",
           tabBarLabelStyle: { color: 'black' },
           headerShown: false,
@@ -80,7 +83,3 @@ const StackNavigator = () => {
 
 
 export default StackNavigator
-
-const styles = StyleSheet.create({
-
-})

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, TextInput, Button } from 'react-native'
+import {Text, View, Image, SafeAreaView, TextInput, Button } from 'react-native'
 import { React, useState, useContext } from 'react'
 import axios from 'axios'
 
@@ -18,7 +18,7 @@ const ThreadsScreen = () => {
       }
   
       axios
-        .post("http://192.168.0.14:8000/create-post", postData)
+        .post("http://192.168.0.06:8000/create-post", postData)
         .then((response) => {
           setContent("");
         })
@@ -64,11 +64,10 @@ const ThreadsScreen = () => {
   
         <View style={{ marginTop: 20 }} />
   
-        <Button onPress={handlePostSubmit} title="Share Post" color = 'black' />
+        <Button onPress={handlePostSubmit} title="Share Myself" color = 'black' />
       </SafeAreaView>
     );
   };
   
   export default ThreadsScreen;
   
-  const styles = StyleSheet.create({});
