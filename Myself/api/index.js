@@ -21,8 +21,8 @@ mongoose.connect("mongodb+srv://traderdre:andre@cluster0.xakisip.mongodb.net/", 
   console.log("Error Connecting to MongoDB")
 })
 
-app.listen(port, "192.168.0.6", () => {
-  console.log("server is running on http://192.168.0.6")
+app.listen(port, "192.168.0.14", () => {
+  console.log("server is running on http://192.168.0.14")
 })
 
 const User = require("./models/user");
@@ -133,24 +133,6 @@ app.post("/login", async (req, res) => {
 });
 
 
-// endpoint to access all the users except the logged in user
-app.get("/user/:userId", (req, res) => {
-  try {
-    const loggedInUserId = req.params.userId;
-
-    User.find({ _id: { $ne: loggedInUserId } })
-      .then((users) => {
-        res.status(200).json(users);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        res.status(500).json("error");
-      });
-  } catch (error) {
-    res.status(500).json({ message: "error getting the users" });
-  }
-})
-
 // endpoint to create a new post in the backend
 app.post("/create-post", async (req, res) => {
   try {
@@ -174,10 +156,22 @@ app.post("/create-post", async (req, res) => {
   }
 })
 
+
+// endpoint to delete posts
+app.delete('/delete-post/', async (req, res) => {
+  try {
+    await Post.deleteMany();
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (error) { 
+    res.status(500).json({ message: 'An error occurred while deleting the post' }); 
+  } 
+}) 
+
 // endpoint to get all the posts
 
 app.get('/get-posts', async (req, res) => {
   try {
+
     const posts = await Post.find().populate('user', 'name').sort({ created_at: -1 })
 
 

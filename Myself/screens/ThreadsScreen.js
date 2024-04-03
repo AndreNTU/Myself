@@ -18,7 +18,7 @@ const ThreadsScreen = () => {
       }
   
       axios
-        .post("http://192.168.0.06:8000/create-post", postData)
+        .post("http://192.168.0.14:8000/create-post", postData)
         .then((response) => {
           setContent("");
         })
@@ -34,7 +34,7 @@ const ThreadsScreen = () => {
             alignItems: "center",
             gap: 10,
             padding: 10,
-            paddingTop: 40
+            paddingTop: 55
           }}
         >
           <Image
